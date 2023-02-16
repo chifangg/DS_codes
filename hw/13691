@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<math.h>
+
+int nums[3000001];
+int count = 0;
+int flag = 0;
+
+void flippart(int a, int b);
+void swap(int a, int b);
+int main()
+{
+	int t, n;
+	scanf("%d", &t);
+	for(int i = 0; i < t; i++)
+	{
+		scanf("%d", &n);
+		for(int j = 0; j < n; j++)
+		{
+			scanf("%d", &nums[j]);
+		}
+		flippart(0, n-1);
+		for(int j = 0; j < n-1; j++)
+		{
+			if(nums[j] > nums[j+1])
+			{
+				flag = 1;
+				break;
+			} 
+		}
+		
+		if(flag == 1)printf("-1\n");
+		else printf("%d\n", count);
+		flag = 0;
+		count = 0;//////////!!!!!!!!!!!!!!!!!!!!!
+	}
+}
+
+void swap(int a, int b)
+{
+	int tmp;
+	tmp = nums[a];
+	nums[a] = nums[b];
+	nums[b] = tmp;
+}
+
+void flippart(int a, int b)
+{
+	int mid = 0;
+	mid = (a+b) / 2;
+	int range = (b-a+1) / 2;
+	if(nums[a] > nums[mid+1])
+	{
+		for(int i = 0; i < range; i++)
+		{
+			swap(a+i, mid+i+1);
+		} 
+		
+		count++;
+//		printf("%d %d %d\n", count, a, b);
+//		for(int k = 0; k < 8; k++)
+//		{
+//			printf("%d ", nums[k]);
+//		}
+//		printf("\n");
+	}
+	if(b-a == 1) return;
+	else
+	{
+		flippart(a, mid);
+		flippart(mid+1, b);
+	}
+}
+
